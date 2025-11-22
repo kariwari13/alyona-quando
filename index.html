@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Итальянский язык - Начальный уровень</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const Mic = ({ size = 20, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+        );
+
+        const MicOff = ({ size = 20, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="2" y1="2" x2="22" y2="22"></line>
+                <path d="M18.89 13.23A7.12 7.12 0 0 0 19 12v-2"></path>
+                <path d="M5 10v2a7 7 0 0 0 12 5"></path>
+                <path d="M15 9.34V5a3 3 0 0 0-5.68-1.33"></path>
+                <path d="M9 9v3a3 3 0 0 0 5.12 2.12"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+        );
+
+        const Volume2 = ({ size = 20, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+        );
+
+        const RotateCcw = ({ size = 16, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+            </svg>
+        );
+
+        const CheckCircle = ({ size = 20, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22,4 12,14.01 9,11.01"></polyline>
+            </svg>
+        );
+
+        const XCircle = ({ size = 20, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+        );
+
+        const Pizza = ({ size = 28, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10z"></path>
+                <path d="M12 2v10l8.66 5"></path>
+                <circle cx="8" cy="8" r="1"></circle>
+                <circle cx="14" cy="10" r="1"></circle>
+                <circle cx="10" cy="14" r="1"></circle>
+            </svg>
+        );
+
+        const Users = ({ size = 20, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+        );
+
+        const MessageCircle = ({ size = 20, className = "" }) => (
+            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+        );
+
+        const ItalianBeginnerApp = () => {
+            const [currentTask, setCurrentTask] = useState(null);
+            const [userAnswer, setUserAnswer] = useState('');
+            const [showResult, setShowResult] = useState(null);
+            const [score, setScore] = useState({ correct: 0, total: 0 });
+            const [isRecording, setIsRecording] = useState(false);
+            const [activeTab, setActiveTab] = useState('tasks');
+            const [selectedCategory, setSelectedCategory] = useState('all');
+
+            const vocabulary = {
+                questions: {
+                    'Dove': {
+                        definition: 'Где? (место)',
+                        example: 'Dove abiti? (Где ты живёшь?)',
+                        forms: 'Вопрос о месте',
+                        phrases: ['Dove sei?', 'Dove vai?', 'Dove abiti?']
+                    },
+                    'Quando': {
+                        definition: 'Когда? (время)',
+                        example: 'Quando arrivi? (Когда ты приезжаешь?)',
+                        forms: 'Вопрос о времени',
+                        phrases: ['Quando parti?', 'Quando torni?', 'Quando arrivi?']
+                    },
+                    'Quanto': {
+                        definition: 'Сколько? (количество)',
+                        example: 'Quanto costa? (Сколько стоит?)',
+                        forms: 'Вопрос о количестве/цене. Изменяется: quanto/quanta/quanti/quante',
+                        phrases: ['Quanto costa?', 'Quanti anni hai?', 'Quanta acqua?']
+                    },
+                    'Che': {
+                        definition: 'Что? Какой/какая? (предмет/вещь)',
+                        example: 'Che fai? (Что ты делаешь?)',
+                        forms: 'Вопрос о предмете или действии',
+                        phrases: ['Che fai?', 'Che giorno è?', 'Che ore sono?']
+                    },
+                    'Chi': {
+                        definition: 'Кто? (человек)',
+                        example: 'Chi sei? (Кто ты?)',
+                        forms: 'Вопрос о человеке',
+                        phrases: ['Chi sei?', 'Chi è?', 'Chi sono?']
+                    },
+                    'Che cosa': {
+                        definition: 'Что? (что именно)',
+                        example: 'Che cosa mangi? (Что ты ешь?)',
+                        forms: 'Синоним "che" - более полная форма',
+                        phrases: ['Che cosa fai?', 'Che cosa vuoi?', 'Che cosa mangi?']
+                    },
+                    'Come': {
+                        definition: 'Как? Какой? (способ/качество)',
+                        example: 'Come stai? (Как дела?)',
+                        forms: 'Вопрос о способе или состоянии',
+                        phrases: ['Come stai?', 'Come ti chiami?', 'Come va?']
+                    },
+                    'Di dove': {
+                        definition: 'Откуда? (происхождение)',
+                        example: 'Di dove sei? (Откуда ты?)',
+                        forms: 'Вопрос о происхождении',
+                        phrases: ['Di dove sei?', 'Di dove siete?', 'Di dov\'è?']
+                    },
+                    'A che ora': {
+                        definition: 'В какое время? Во сколько?',
+                        example: 'A che ora parti? (Во сколько ты уезжаешь?)',
+                        forms: 'Вопрос о конкретном времени',
+                        phrases: ['A che ora arrivi?', 'A che ora parti?', 'A che ora mangiamo?']
+                    }
+                },
+                volere: {
+                    'volere (хотеть)': {
+                        definition: 'хотеть',
+                        example: 'Io voglio un caffè (Я хочу кофе)',
+                        forms: 'Спряжение: io voglio, tu vuoi, lui/lei vuole, noi vogliamo, voi volete, loro vogliono',
+                        phrases: ['Voglio andare', 'Vuoi venire?', 'Vogliamo mangiare']
+                    },
+                    'io voglio': {
+                        definition: 'я хочу',
+                        example: 'Io voglio un gelato (Я хочу мороженое)',
+                        forms: '1-е лицо единственного числа',
+                        phrases: ['Voglio dormire', 'Voglio mangiare', 'Voglio andare']
+                    },
+                    'tu vuoi': {
+                        definition: 'ты хочешь',
+                        example: 'Tu vuoi un caffè? (Ты хочешь кофе?)',
+                        forms: '2-е лицо единственного числа',
+                        phrases: ['Vuoi venire?', 'Vuoi mangiare?', 'Cosa vuoi?']
+                    },
+                    'lui/lei vuole': {
+                        definition: 'он/она хочет',
+                        example: 'Lei vuole una pizza (Она хочет пиццу)',
+                        forms: '3-е лицо единственного числа',
+                        phrases: ['Vuole andare', 'Vuole dormire', 'Cosa vuole?']
+                    },
+                    'noi vogliamo': {
+                        definition: 'мы хотим',
+                        example: 'Noi vogliamo viaggiare (Мы хотим путешествовать)',
+                        forms: '1-е лицо множественного числа',
+                        phrases: ['Vogliamo andare', 'Vogliamo mangiare', 'Vogliamo partire']
+                    },
+                    'voi volete': {
+                        definition: 'вы хотите',
+                        example: 'Voi volete ballare? (Вы хотите танцевать?)',
+                        forms: '2-е лицо множественного числа',
+                        phrases: ['Volete venire?', 'Volete mangiare?', 'Cosa volete?']
+                    },
+                    'loro vogliono': {
+                        definition: 'они хотят',
+                        example: 'Loro vogliono studiare (Они хотят учиться)',
+                        forms: '3-е лицо множественного числа',
+                        phrases: ['Vogliono andare', 'Vogliono dormire', 'Vogliono mangiare']
+                    }
+                },
+                potere: {
+                    'potere (мочь)': {
+                        definition: 'мочь, уметь',
+                        example: 'Io posso aiutare (Я могу помочь)',
+                        forms: 'Спряжение: io posso, tu puoi, lui/lei può, noi possiamo, voi potete, loro possono',
+                        phrases: ['Posso venire', 'Puoi aiutare?', 'Possiamo parlare']
+                    },
+                    'io posso': {
+                        definition: 'я могу',
+                        example: 'Io posso venire (Я могу прийти)',
+                        forms: '1-е лицо единственного числа',
+                        phrases: ['Posso entrare?', 'Posso aiutare?', 'Posso parlare?']
+                    },
+                    'tu puoi': {
+                        definition: 'ты можешь',
+                        example: 'Tu puoi aiutare? (Ты можешь помочь?)',
+                        forms: '2-е лицо единственного числа',
+                        phrases: ['Puoi venire?', 'Puoi aiutare?', 'Puoi aspettare?']
+                    },
+                    'lui/lei può': {
+                        definition: 'он/она может',
+                        example: 'Lei può aspettare (Она может подождать)',
+                        forms: '3-е лицо единственного числа. ВНИМАНИЕ: с accent (può)!',
+                        phrases: ['Può venire', 'Può aiutare', 'Può aspettare']
+                    },
+                    'noi possiamo': {
+                        definition: 'мы можем',
+                        example: 'Noi possiamo parlare italiano (Мы можем говорить по-итальянски)',
+                        forms: '1-е лицо множественного числа',
+                        phrases: ['Possiamo andare', 'Possiamo aiutare', 'Possiamo parlare']
+                    },
+                    'voi potete': {
+                        definition: 'вы можете',
+                        example: 'Voi potete venire domani? (Вы можете прийти завтра?)',
+                        forms: '2-е лицо множественного числа',
+                        phrases: ['Potete venire?', 'Potete aiutare?', 'Potete aspettare?']
+                    },
+                    'loro possono': {
+                        definition: 'они могут',
+                        example: 'Loro possono aiutare (Они могут помочь)',
+                        forms: '3-е лицо множественного числа',
+                        phrases: ['Possono venire', 'Possono aiutare', 'Possono aspettare']
+                    }
+                },
+                lavare: {
+                    'lavare (мыть)': {
+                        definition: 'мыть',
+                        example: 'Io lavo i piatti (Я мою посуду)',
+                        forms: 'Спряжение: io lavo, tu lavi, lui/lei lava, noi laviamo, voi lavate, loro lavano',
+                        phrases: ['Lavo i piatti', 'Lavo le mani', 'Lavo la macchina']
+                    },
+                    'io lavo': {
+                        definition: 'я мою',
+                        example: 'Io lavo le mani (Я мою руки)',
+                        forms: '1-е лицо единственного числа',
+                        phrases: ['Lavo i piatti', 'Lavo la macchina', 'Mi lavo']
+                    },
+                    'tu lavi': {
+                        definition: 'ты моешь',
+                        example: 'Tu lavi i piatti? (Ты моешь посуду?)',
+                        forms: '2-е лицо единственного числа',
+                        phrases: ['Lavi la macchina?', 'Ti lavi?', 'Lavi i vetri?']
+                    },
+                    'lui/lei lava': {
+                        definition: 'он/она моет',
+                        example: 'Lei lava i piatti (Она моет посуду)',
+                        forms: '3-е лицо единственного числа',
+                        phrases: ['Lava la macchina', 'Si lava', 'Lava i pavimenti']
+                    },
+                    'noi laviamo': {
+                        definition: 'мы моем',
+                        example: 'Noi laviamo la macchina (Мы моем машину)',
+                        forms: '1-е лицо множественного числа',
+                        phrases: ['Laviamo i piatti', 'Ci laviamo', 'Laviamo tutto']
+                    },
+                    'voi lavate': {
+                        definition: 'вы моете',
+                        example: 'Voi lavate i vetri? (Вы моете окна?)',
+                        forms: '2-е лицо множественного числа',
+                        phrases: ['Lavate la macchina?', 'Vi lavate?', 'Lavate i piatti?']
+                    },
+                    'loro lavano': {
+                        definition: 'они моют',
+                        example: 'Loro lavano i piatti (Они моют посуду)',
+                        forms: '3-е лицо множественного числа',
+                        phrases: ['Lavano la macchina', 'Si lavano', 'Lavano tutto']
+                    }
+                },
+                lavorare: {
+                    'lavorare (работать)': {
+                        definition: 'работать',
+                        example: 'Io lavoro in ufficio (Я работаю в офисе)',
+                        forms: 'Спряжение: io lavoro, tu lavori, lui/lei lavora, noi lavoriamo, voi lavorate, loro lavorano',
+                        phrases: ['Lavoro qui', 'Lavoro in banca', 'Lavoro ogni giorno']
+                    },
+                    'io lavoro': {
+                        definition: 'я работаю',
+                        example: 'Io lavoro in banca (Я работаю в банке)',
+                        forms: '1-е лицо единственного числа',
+                        phrases: ['Lavoro qui', 'Lavoro molto', 'Lavoro in ufficio']
+                    },
+                    'tu lavori': {
+                        definition: 'ты работаешь',
+                        example: 'Tu lavori in ospedale? (Ты работаешь в больнице?)',
+                        forms: '2-е лицо единственного числа',
+                        phrases: ['Dove lavori?', 'Lavori oggi?', 'Lavori molto?']
+                    },
+                    'lui/lei lavora': {
+                        definition: 'он/она работает',
+                        example: 'Lei lavora in un ristorante (Она работает в ресторане)',
+                        forms: '3-е лицо единственного числа',
+                        phrases: ['Lavora qui', 'Lavora molto', 'Dove lavora?']
+                    },
+                    'noi lavoriamo': {
+                        definition: 'мы работаем',
+                        example: 'Noi lavoriamo insieme (Мы работаем вместе)',
+                        forms: '1-е лицо множественного числа',
+                        phrases: ['Lavoriamo qui', 'Lavoriamo molto', 'Lavoriamo insieme']
+                    },
+                    'voi lavorate': {
+                        definition: 'вы работаете',
+                        example: 'Voi lavorate in centro? (Вы работаете в центре?)',
+                        forms: '2-е лицо множественного числа',
+                        phrases: ['Dove lavorate?', 'Lavorate oggi?', 'Lavorate insieme?']
+                    },
+                    'loro lavorano': {
+                        definition: 'они работают',
+                        example: 'Loro lavorano in banca (Они работают в банке)',
+                        forms: '3-е лицо множественного числа',
+                        phrases: ['Lavorano qui', 'Lavorano molto', 'Lavorano insieme']
+                    }
+                }
+            };
+
+            const sampleTasks = [
+                // Question words - basic understanding
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "Dove abiti?"',answer:'где ты живёшь',alternatives:['где ты живёшь','где ты живешь','где вы живёте'],word:'Dove'},
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "Quando arrivi?"',answer:'когда ты приезжаешь',alternatives:['когда ты приезжаешь','когда ты приедешь','когда вы приезжаете'],word:'Quando'},
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "Quanto costa?"',answer:'сколько стоит',alternatives:['сколько стоит','сколько это стоит'],word:'Quanto'},
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "Chi sei?"',answer:'кто ты',alternatives:['кто ты','кто вы'],word:'Chi'},
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "Come stai?"',answer:'как дела',alternatives:['как дела','как ты','как поживаешь'],word:'Come'},
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "Di dove sei?"',answer:'откуда ты',alternatives:['откуда ты','откуда вы'],word:'Di dove'},
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "A che ora parti?"',answer:'во сколько ты уезжаешь',alternatives:['во сколько ты уезжаешь','в какое время ты уезжаешь','когда ты уезжаешь'],word:'A che ora'},
+                
+                // Question words - fill in correct one
+                {type:'multiple_choice',category:'questions',question:'___ abiti? (Где ты живёшь?)',options:['Dove','Quando','Chi','Come'],correct:0,word:'Dove'},
+                {type:'multiple_choice',category:'questions',question:'___ sei? (Кто ты?)',options:['Chi','Dove','Che','Come'],correct:0,word:'Chi'},
+                {type:'multiple_choice',category:'questions',question:'___ costa? (Сколько стоит?)',options:['Quanto','Quando','Chi','Dove'],correct:0,word:'Quanto'},
+                {type:'multiple_choice',category:'questions',question:'___ stai? (Как дела?)',options:['Come','Chi','Dove','Quando'],correct:0,word:'Come'},
+                {type:'multiple_choice',category:'questions',question:'___ arrivi? (Когда ты приезжаешь?)',options:['Quando','Dove','Chi','Quanto'],correct:0,word:'Quando'},
+                {type:'multiple_choice',category:'questions',question:'___ dove sei? (Откуда ты?)',options:['Di','A','In','Per'],correct:0,word:'Di dove'},
+                {type:'multiple_choice',category:'questions',question:'___ che ora parti? (Во сколько ты уезжаешь?)',options:['A','Di','In','Per'],correct:0,word:'A che ora'},
+                {type:'multiple_choice',category:'questions',question:'___ fai? (Что ты делаешь?)',options:['Che','Chi','Dove','Come'],correct:0,word:'Che'},
+                
+                // Fill in blanks
+                {type:'fill_blanks',category:'questions',question:'Заполните: "___ ti chiami?" (Как тебя зовут?)',answer:'come',hint:'(как?)',word:'Come'},
+                {type:'fill_blanks',category:'questions',question:'Заполните: "___ anni hai?" (Сколько тебе лет?)',answer:'quanti',hint:'(сколько? - множественное число)',word:'Quanto'},
+                {type:'fill_blanks',category:'questions',question:'Заполните: "___ vai?" (Куда ты идёшь?)',answer:'dove',hint:'(где? куда?)',word:'Dove'},
+                
+                // Listening
+                {type:'listening',category:'questions',question:'Прослушайте и повторите: "Dove abiti?"',audio:'Dove abiti?',word:'Dove'},
+                {type:'listening',category:'questions',question:'Прослушайте и повторите: "Come ti chiami?"',audio:'Come ti chiami?',word:'Come'},
+                {type:'listening',category:'questions',question:'Прослушайте и повторите: "Quanto costa?"',audio:'Quanto costa?',word:'Quanto'},
+                
+                // Volere conjugation - recognition
+                {type:'translation_it_ru',category:'volere',question:'Переведите: "Io voglio un caffè"',answer:'я хочу кофе',alternatives:['я хочу кофе','я хочу один кофе'],word:'io voglio'},
+                {type:'translation_it_ru',category:'volere',question:'Переведите: "Tu vuoi venire?"',answer:'ты хочешь прийти',alternatives:['ты хочешь прийти','ты хочешь приехать'],word:'tu vuoi'},
+                {type:'translation_it_ru',category:'volere',question:'Переведите: "Lei vuole una pizza"',answer:'она хочет пиццу',alternatives:['она хочет пиццу','она хочет одну пиццу'],word:'lui/lei vuole'},
+                {type:'translation_it_ru',category:'volere',question:'Переведите: "Noi vogliamo mangiare"',answer:'мы хотим есть',alternatives:['мы хотим есть','мы хотим кушать','мы хотим поесть'],word:'noi vogliamo'},
+                
+                // Volere conjugation - fill in
+                {type:'multiple_choice',category:'volere',question:'Io ___ un gelato (Я хочу мороженое)',options:['voglio','vuoi','vuole','vogliono'],correct:0,word:'io voglio'},
+                {type:'multiple_choice',category:'volere',question:'Tu ___ partire? (Ты хочешь уехать?)',options:['vuoi','voglio','vuole','volete'],correct:0,word:'tu vuoi'},
+                {type:'multiple_choice',category:'volere',question:'Lei ___ dormire (Она хочет спать)',options:['vuole','voglio','vuoi','vogliono'],correct:0,word:'lui/lei vuole'},
+                {type:'multiple_choice',category:'volere',question:'Noi ___ andare al mare (Мы хотим поехать на море)',options:['vogliamo','volete','vogliono','vuole'],correct:0,word:'noi vogliamo'},
+                {type:'multiple_choice',category:'volere',question:'Voi ___ ballare? (Вы хотите танцевать?)',options:['volete','vogliamo','vogliono','vuole'],correct:0,word:'voi volete'},
+                {type:'multiple_choice',category:'volere',question:'Loro ___ studiare (Они хотят учиться)',options:['vogliono','volete','vogliamo','vuole'],correct:0,word:'loro vogliono'},
+                
+                // Volere - fill blanks
+                {type:'fill_blanks',category:'volere',question:'Заполните: "Io ___ andare" (Я хочу пойти)',answer:'voglio',hint:'(1-е лицо ед.ч.)',word:'io voglio'},
+                {type:'fill_blanks',category:'volere',question:'Заполните: "Tu ___ un caffè?" (Ты хочешь кофе?)',answer:'vuoi',hint:'(2-е лицо ед.ч.)',word:'tu vuoi'},
+                {type:'fill_blanks',category:'volere',question:'Заполните: "Noi ___ mangiare" (Мы хотим есть)',answer:'vogliamo',hint:'(1-е лицо мн.ч.)',word:'noi vogliamo'},
+                
+                // Volere listening
+                {type:'listening',category:'volere',question:'Прослушайте и повторите: "Voglio un gelato"',audio:'Voglio un gelato',word:'io voglio'},
+                {type:'listening',category:'volere',question:'Прослушайте и повторите: "Vuoi venire?"',audio:'Vuoi venire?',word:'tu vuoi'},
+                
+                // Potere conjugation - recognition
+                {type:'translation_it_ru',category:'potere',question:'Переведите: "Io posso aiutare"',answer:'я могу помочь',alternatives:['я могу помочь'],word:'io posso'},
+                {type:'translation_it_ru',category:'potere',question:'Переведите: "Tu puoi venire?"',answer:'ты можешь прийти',alternatives:['ты можешь прийти','ты можешь приехать'],word:'tu puoi'},
+                {type:'translation_it_ru',category:'potere',question:'Переведите: "Lei può aspettare"',answer:'она может подождать',alternatives:['она может подождать','она может ждать'],word:'lui/lei può'},
+                {type:'translation_it_ru',category:'potere',question:'Переведите: "Noi possiamo parlare"',answer:'мы можем говорить',alternatives:['мы можем говорить','мы можем разговаривать'],word:'noi possiamo'},
+                
+                // Potere conjugation - fill in
+                {type:'multiple_choice',category:'potere',question:'Io ___ venire (Я могу прийти)',options:['posso','puoi','può','possono'],correct:0,word:'io posso'},
+                {type:'multiple_choice',category:'potere',question:'Tu ___ aiutare? (Ты можешь помочь?)',options:['puoi','posso','può','potete'],correct:0,word:'tu puoi'},
+                {type:'multiple_choice',category:'potere',question:'Lei ___ aspettare (Она может подождать)',options:['può','posso','puoi','possono'],correct:0,word:'lui/lei può'},
+                {type:'multiple_choice',category:'potere',question:'Noi ___ andare (Мы можем пойти)',options:['possiamo','potete','possono','può'],correct:0,word:'noi possiamo'},
+                {type:'multiple_choice',category:'potere',question:'Voi ___ venire? (Вы можете прийти?)',options:['potete','possiamo','possono','può'],correct:0,word:'voi potete'},
+                {type:'multiple_choice',category:'potere',question:'Loro ___ aiutare (Они могут помочь)',options:['possono','potete','possiamo','può'],correct:0,word:'loro possono'},
+                
+                // Potere - fill blanks
+                {type:'fill_blanks',category:'potere',question:'Заполните: "Io ___ entrare?" (Я могу войти?)',answer:'posso',hint:'(1-е лицо ед.ч.)',word:'io posso'},
+                {type:'fill_blanks',category:'potere',question:'Заполните: "Tu ___ aiutare?" (Ты можешь помочь?)',answer:'puoi',hint:'(2-е лицо ед.ч.)',word:'tu puoi'},
+                {type:'fill_blanks',category:'potere',question:'Заполните: "Noi ___ parlare" (Мы можем говорить)',answer:'possiamo',hint:'(1-е лицо мн.ч.)',word:'noi possiamo'},
+                
+                // Potere listening
+                {type:'listening',category:'potere',question:'Прослушайте и повторите: "Posso entrare?"',audio:'Posso entrare?',word:'io posso'},
+                {type:'listening',category:'potere',question:'Прослушайте и повторите: "Puoi aiutare?"',audio:'Puoi aiutare?',word:'tu puoi'},
+                
+                // Lavare vs Lavorare - recognition
+                {type:'translation_it_ru',category:'lavare',question:'Переведите: "Io lavo i piatti"',answer:'я мою посуду',alternatives:['я мою посуду','я мою тарелки'],word:'io lavo'},
+                {type:'translation_it_ru',category:'lavare',question:'Переведите: "Tu lavi la macchina?"',answer:'ты моешь машину',alternatives:['ты моешь машину'],word:'tu lavi'},
+                {type:'translation_it_ru',category:'lavorare',question:'Переведите: "Io lavoro in banca"',answer:'я работаю в банке',alternatives:['я работаю в банке'],word:'io lavoro'},
+                {type:'translation_it_ru',category:'lavorare',question:'Переведите: "Tu lavori in ospedale?"',answer:'ты работаешь в больнице',alternatives:['ты работаешь в больнице'],word:'tu lavori'},
+                
+                // Lavare vs Lavorare - critical distinction
+                {type:'multiple_choice',category:'lavare',question:'Io ___ i piatti (Я мою посуду)',options:['lavo','lavoro','lavi','lavori'],correct:0,word:'io lavo'},
+                {type:'multiple_choice',category:'lavorare',question:'Io ___ in ufficio (Я работаю в офисе)',options:['lavoro','lavo','lavori','lavi'],correct:0,word:'io lavoro'},
+                {type:'multiple_choice',category:'lavare',question:'Tu ___ la macchina? (Ты моешь машину?)',options:['lavi','lavori','lavo','lavoro'],correct:0,word:'tu lavi'},
+                {type:'multiple_choice',category:'lavorare',question:'Tu ___ qui? (Ты работаешь здесь?)',options:['lavori','lavi','lavoro','lavo'],correct:0,word:'tu lavori'},
+                {type:'multiple_choice',category:'lavare',question:'Lei ___ i vetri (Она моет окна)',options:['lava','lavora','laviamo','lavoriamo'],correct:0,word:'lui/lei lava'},
+                {type:'multiple_choice',category:'lavorare',question:'Lei ___ in un ristorante (Она работает в ресторане)',options:['lavora','lava','lavoriamo','laviamo'],correct:0,word:'lui/lei lavora'},
+                
+                // More lavare/lavorare
+                {type:'multiple_choice',category:'lavare',question:'Noi ___ la macchina (Мы моем машину)',options:['laviamo','lavoriamo','lavate','lavorate'],correct:0,word:'noi laviamo'},
+                {type:'multiple_choice',category:'lavorare',question:'Noi ___ insieme (Мы работаем вместе)',options:['lavoriamo','laviamo','lavorate','lavate'],correct:0,word:'noi lavoriamo'},
+                {type:'multiple_choice',category:'lavare',question:'Voi ___ i piatti? (Вы моете посуду?)',options:['lavate','lavorate','laviamo','lavoriamo'],correct:0,word:'voi lavate'},
+                {type:'multiple_choice',category:'lavorare',question:'Voi ___ in centro? (Вы работаете в центре?)',options:['lavorate','lavate','lavoriamo','laviamo'],correct:0,word:'voi lavorate'},
+                {type:'multiple_choice',category:'lavare',question:'Loro ___ tutto (Они моют всё)',options:['lavano','lavorano','lavate','lavorate'],correct:0,word:'loro lavano'},
+                {type:'multiple_choice',category:'lavorare',question:'Loro ___ molto (Они много работают)',options:['lavorano','lavano','lavorate','lavate'],correct:0,word:'loro lavorano'},
+                
+                // Fill blanks lavare/lavorare
+                {type:'fill_blanks',category:'lavare',question:'Заполните: "Io ___ le mani" (Я мою руки)',answer:'lavo',hint:'(мыть)',word:'io lavo'},
+                {type:'fill_blanks',category:'lavorare',question:'Заполните: "Io ___ qui" (Я работаю здесь)',answer:'lavoro',hint:'(работать)',word:'io lavoro'},
+                {type:'fill_blanks',category:'lavare',question:'Заполните: "Tu ___ i piatti?" (Ты моешь посуду?)',answer:'lavi',hint:'(мыть)',word:'tu lavi'},
+                {type:'fill_blanks',category:'lavorare',question:'Заполните: "Tu ___ oggi?" (Ты работаешь сегодня?)',answer:'lavori',hint:'(работать)',word:'tu lavori'},
+                
+                // Listening lavare/lavorare
+                {type:'listening',category:'lavare',question:'Прослушайте и повторите: "Lavo i piatti"',audio:'Lavo i piatti',word:'io lavo'},
+                {type:'listening',category:'lavorare',question:'Прослушайте и повторите: "Lavoro in banca"',audio:'Lavoro in banca',word:'io lavoro'},
+                {type:'listening',category:'lavare',question:'Прослушайте и повторите: "Lavi la macchina?"',audio:'Lavi la macchina?',word:'tu lavi'},
+                {type:'listening',category:'lavorare',question:'Прослушайте и повторите: "Lavori qui?"',audio:'Lavori qui?',word:'tu lavori'},
+                
+                // Situational tasks
+                {type:'situational',category:'questions',question:'Ситуация: Спросите откуда человек',context:'Используйте правильное вопросительное слово',expectedElements:['di dove'],word:'Di dove'},
+                {type:'situational',category:'volere',question:'Ситуация: Скажите что вы хотите кофе',context:'Используйте глагол volere',expectedElements:['voglio','caffè'],word:'io voglio'},
+                {type:'situational',category:'potere',question:'Ситуация: Спросите можете ли вы войти',context:'Используйте глагол potere',expectedElements:['posso','entrare'],word:'io posso'},
+                {type:'situational',category:'lavare',question:'Ситуация: Скажите что вы моете посуду',context:'Используйте глагол lavare',expectedElements:['lavo','piatti'],word:'io lavo'},
+                {type:'situational',category:'lavorare',question:'Ситуация: Скажите что вы работаете в банке',context:'Используйте глагол lavorare',expectedElements:['lavoro','banca'],word:'io lavoro'}
+            ];
+
+            const generateRandomTask = () => {
+                const filteredTasks = selectedCategory === 'all' 
+                    ? sampleTasks 
+                    : sampleTasks.filter(task => task.category === selectedCategory);
+                
+                const randomTask = filteredTasks[Math.floor(Math.random() * filteredTasks.length)];
+                setCurrentTask({...randomTask, id: Date.now()});
+                setUserAnswer('');
+                setShowResult(null);
+            };
+
+            const checkAnswer = () => {
+                if (!currentTask) return;
+                
+                let isCorrect = false;
+                
+                switch(currentTask.type) {
+                    case 'multiple_choice':
+                        isCorrect = parseInt(userAnswer) === currentTask.correct;
+                        break;
+                    case 'translation_it_ru':
+                    case 'fill_blanks':
+                        const normalizedAnswer = userAnswer.toLowerCase().trim();
+                        if (currentTask.alternatives) {
+                            isCorrect = currentTask.alternatives.some(alt => 
+                                alt.toLowerCase() === normalizedAnswer
+                            );
+                        } else {
+                            isCorrect = normalizedAnswer === currentTask.answer.toLowerCase();
+                        }
+                        break;
+                    case 'situational':
+                        isCorrect = currentTask.expectedElements.every(element =>
+                            userAnswer.toLowerCase().includes(element.toLowerCase())
+                        );
+                        break;
+                    default:
+                        isCorrect = true;
+                }
+                
+                setScore(prev => ({
+                    correct: prev.correct + (isCorrect ? 1 : 0),
+                    total: prev.total + 1
+                }));
+                
+                setShowResult(isCorrect);
+            };
+
+            const speakText = (text) => {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'it-IT';
+                    utterance.rate = 0.75;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+                    
+                    const setVoice = () => {
+                        const voices = window.speechSynthesis.getVoices();
+                        const preferredVoices = [
+                            voices.find(voice => voice.name.toLowerCase().includes('google') && voice.lang.startsWith('it')),
+                            voices.find(voice => voice.name.toLowerCase().includes('microsoft') && voice.lang.startsWith('it')),
+                            voices.find(voice => voice.lang === 'it-IT'),
+                            voices.find(voice => voice.lang.startsWith('it'))
+                        ];
+                        
+                        const selectedVoice = preferredVoices.find(voice => voice !== undefined);
+                        if (selectedVoice) utterance.voice = selectedVoice;
+                        
+                        try {
+                            window.speechSynthesis.speak(utterance);
+                        } catch (error) {
+                            console.error('Speech error:', error);
+                        }
+                    };
+                    
+                    if (window.speechSynthesis.getVoices().length > 0) {
+                        setVoice();
+                    } else {
+                        window.speechSynthesis.onvoiceschanged = () => {
+                            setVoice();
+                            window.speechSynthesis.onvoiceschanged = null;
+                        };
+                        setTimeout(() => {
+                            if (window.speechSynthesis.getVoices().length === 0) {
+                                window.speechSynthesis.speak(utterance);
+                            }
+                        }, 1000);
+                    }
+                }
+            };
+
+            const startRecording = async () => {
+                if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                    alert('Ваш браузер не поддерживает распознавание речи. Попробуйте Chrome или Edge.');
+                    return;
+                }
+
+                try {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    const recognition = new SpeechRecognition();
+                    
+                    recognition.lang = 'it-IT';
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                    
+                    recognition.onstart = () => {
+                        setIsRecording(true);
+                        setUserAnswer('Parla...');
+                    };
+                    
+                    recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript.trim();
+                        setUserAnswer(transcript);
+                        setIsRecording(false);
+                        
+                        if (currentTask && currentTask.type === 'listening') {
+                            setTimeout(() => {
+                                checkAnswer();
+                            }, 1000);
+                        }
+                    };
+                    
+                    recognition.onerror = (event) => {
+                        setIsRecording(false);
+                        setUserAnswer('Errore: ' + event.error);
+                    };
+                    
+                    recognition.onend = () => {
+                        setIsRecording(false);
+                    };
+                    
+                    recognition.start();
+                    
+                } catch (error) {
+                    setIsRecording(false);
+                    setUserAnswer('Не удалось запустить распознавание речи');
+                }
+            };
+
+            const stopRecording = () => {
+                setIsRecording(false);
+            };
+
+            useEffect(() => {
+                generateRandomTask();
+            }, [selectedCategory]);
+
+            const renderTask = () => {
+                if (!currentTask) return null;
+
+                switch(currentTask.type) {
+                    case 'multiple_choice':
+                        return (
+                            <div className="space-y-4">
+                                <p className="text-lg font-medium">{currentTask.question}</p>
+                                <div className="grid grid-cols-2 gap-2">
+                                    {currentTask.options.map((option, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setUserAnswer(index.toString())}
+                                            className={`p-3 border rounded-lg transition-colors ${
+                                                userAnswer === index.toString()
+                                                    ? 'bg-green-600 text-white'
+                                                    : 'bg-white hover:bg-green-50'
+                                            }`}
+                                        >
+                                            {option}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    
+                    case 'listening':
+                        return (
+                            <div className="space-y-4">
+                                <p className="text-lg font-medium">{currentTask.question}</p>
+                                <button
+                                    onClick={() => speakText(currentTask.audio)}
+                                    className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                                >
+                                    <Volume2 size={20} />
+                                    Ascolta
+                                </button>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={isRecording ? stopRecording : startRecording}
+                                        className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                                            isRecording 
+                                                ? 'bg-red-500 hover:bg-red-600' 
+                                                : 'bg-green-600 hover:bg-green-700'
+                                        } text-white`}
+                                    >
+                                        {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
+                                        {isRecording ? 'Stop' : 'Registra'}
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    
+                    case 'situational':
+                        return (
+                            <div className="space-y-4">
+                                <div className="bg-yellow-50 p-4 rounded-lg">
+                                    <h3 className="font-semibold text-yellow-800">Ситуация:</h3>
+                                    <p className="text-yellow-700">{currentTask.question}</p>
+                                    {currentTask.context && (
+                                        <p className="text-sm text-yellow-600 mt-2">
+                                            {currentTask.context}
+                                        </p>
+                                    )}
+                                </div>
+                                <textarea
+                                    value={userAnswer}
+                                    onChange={(e) => setUserAnswer(e.target.value)}
+                                    placeholder="Scrivi la risposta..."
+                                    className="w-full p-3 border border-gray-300 rounded-lg"
+                                    rows="3"
+                                />
+                            </div>
+                        );
+                    
+                    default:
+                        return (
+                            <div className="space-y-4">
+                                <p className="text-lg font-medium">{currentTask.question}</p>
+                                {currentTask.hint && (
+                                    <p className="text-sm text-gray-600">{currentTask.hint}</p>
+                                )}
+                                <input
+                                    type="text"
+                                    value={userAnswer}
+                                    onChange={(e) => setUserAnswer(e.target.value)}
+                                    placeholder="Scrivi la risposta..."
+                                    className="w-full p-3 border border-gray-300 rounded-lg"
+                                    onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+                                />
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={isRecording ? stopRecording : startRecording}
+                                        className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                                            isRecording 
+                                                ? 'bg-red-500 hover:bg-red-600' 
+                                                : 'bg-green-600 hover:bg-green-700'
+                                        } text-white`}
+                                    >
+                                        {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
+                                        Voce
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                }
+            };
+
+            const renderVocabulary = () => (
+                <div className="space-y-6">
+                    {Object.entries(vocabulary).map(([category, words]) => (
+                        <div key={category} className="bg-white rounded-lg p-6 shadow-sm border border-green-200">
+                            <h3 className="text-xl font-semibold mb-4 text-green-700">
+                                {category === 'questions' ? '❓ Вопросительные слова' :
+                                 category === 'volere' ? '💚 Volere (хотеть)' : 
+                                 category === 'potere' ? '✨ Potere (мочь)' :
+                                 category === 'lavare' ? '🧼 Lavare (мыть)' : '💼 Lavorare (работать)'}
+                            </h3>
+                            <div className="grid gap-4">
+                                {Object.entries(words).map(([word, info]) => (
+                                    <div key={word} className="border-l-4 border-green-300 pl-4">
+                                        <div className="flex items-center justify-between">
+                                            <h4 className="font-semibold text-lg text-green-800">{word}</h4>
+                                            <button
+                                                onClick={() => speakText(word)}
+                                                className="text-green-600 hover:text-green-800"
+                                            >
+                                                <Volume2 size={20} />
+                                            </button>
+                                        </div>
+                                        <p className="text-gray-600">{info.definition}</p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <p className="text-green-700 flex-1">{info.example}</p>
+                                            <button
+                                                onClick={() => speakText(info.example.split(' (')[0])}
+                                                className="text-green-600 hover:text-green-800"
+                                            >
+                                                <Volume2 size={16} />
+                                            </button>
+                                        </div>
+                                        <div className="mt-2">
+                                            <p className="text-sm text-gray-500 mb-2">{info.forms}</p>
+                                            {info.phrases && (
+                                                <div className="space-y-1">
+                                                    {info.phrases.map((phrase, index) => (
+                                                        <div key={index} className="flex items-center gap-2">
+                                                            <span className="text-sm text-green-600">• {phrase}</span>
+                                                            <button
+                                                                onClick={() => speakText(phrase)}
+                                                                className="text-green-600 hover:text-green-800"
+                                                            >
+                                                                <Volume2 size={14} />
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+
+            return (
+                <div className="max-w-4xl mx-auto bg-gradient-to-b from-green-50 to-white min-h-screen">
+                    <div className="bg-gradient-to-r from-green-600 to-red-600 text-white p-6">
+                        <h1 className="text-2xl font-bold flex items-center gap-2">
+                            <Pizza size={28} />
+                            Italiano per principianti 🇮🇹
+                        </h1>
+                        <p className="mt-2 opacity-90">
+                            Вопросительные слова, volere, potere, lavare/lavorare
+                        </p>
+                        <div className="mt-4 flex gap-4 text-sm">
+                            <span>Правильно: {score.correct}</span>
+                            <span>Всего: {score.total}</span>
+                            <span>Точность: {score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0}%</span>
+                        </div>
+                    </div>
+
+                    <div className="flex border-b bg-white">
+                        <button
+                            onClick={() => setActiveTab('tasks')}
+                            className={`flex-1 p-4 text-center font-medium ${
+                                activeTab === 'tasks' 
+                                    ? 'border-b-2 border-green-600 text-green-700' 
+                                    : 'text-gray-600 hover:text-gray-800'
+                            }`}
+                        >
+                            <MessageCircle className="mx-auto mb-1" size={20} />
+                            Esercizi
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('vocabulary')}
+                            className={`flex-1 p-4 text-center font-medium ${
+                                activeTab === 'vocabulary' 
+                                    ? 'border-b-2 border-green-600 text-green-700' 
+                                    : 'text-gray-600 hover:text-gray-800'
+                            }`}
+                        >
+                            <Users className="mx-auto mb-1" size={20} />
+                            Vocabolario
+                        </button>
+                    </div>
+
+                    <div className="p-6">
+                        {activeTab === 'tasks' && (
+                            <div className="space-y-6">
+                                <div className="flex gap-2 flex-wrap">
+                                    <button onClick={() => setSelectedCategory('all')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'all' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>Tutto</button>
+                                    <button onClick={() => setSelectedCategory('questions')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'questions' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>❓ Domande</button>
+                                    <button onClick={() => setSelectedCategory('volere')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'volere' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>💚 Volere</button>
+                                    <button onClick={() => setSelectedCategory('potere')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'potere' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>✨ Potere</button>
+                                    <button onClick={() => setSelectedCategory('lavare')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'lavare' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>🧼 Lavare</button>
+                                    <button onClick={() => setSelectedCategory('lavorare')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'lavorare' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>💼 Lavorare</button>
+                                </div>
+
+                                <div className="bg-white rounded-lg p-6 shadow-sm border border-green-200">
+                                    {showResult !== null && (
+                                        <div className={`mb-4 p-4 rounded-lg flex items-center gap-2 ${showResult ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                                            {showResult ? <CheckCircle size={20} /> : <XCircle size={20} />}
+                                            {showResult ? 'Corretto! Bravissima! 🎉' : `Sbagliato. Risposta corretta: ${currentTask?.answer || 'vedi sopra'}`}
+                                        </div>
+                                    )}
+                                    
+                                    {renderTask()}
+                                    
+                                    {currentTask && (
+                                        <div className="mt-6 flex gap-3">
+                                            {showResult === null ? (
+                                                <button onClick={checkAnswer} disabled={!userAnswer.trim()} className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed">Controlla</button>
+                                            ) : (
+                                                <button onClick={generateRandomTask} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2"><RotateCcw size={16} />Prossimo</button>
+                                            )}
+                                            <button onClick={generateRandomTask} className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 flex items-center gap-2"><RotateCcw size={16} />Salta</button>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {currentTask?.word && vocabulary[currentTask.category]?.[currentTask.word] && (
+                                    <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                                        <h3 className="font-semibold text-green-800 mb-2">Parola corrente:</h3>
+                                        <div className="text-green-700">
+                                            <p className="font-medium">{currentTask.word}</p>
+                                            <p className="text-sm">{vocabulary[currentTask.category][currentTask.word].forms}</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {activeTab === 'vocabulary' && renderVocabulary()}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(React.createElement(ItalianBeginnerApp), document.getElementById('root'));
+    </script>
+</body>
+</html>

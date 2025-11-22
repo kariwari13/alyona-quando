@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Итальянский язык - Начальный уровень</title>
+    <title>Итальянский A0-A1</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -72,13 +72,10 @@
             </svg>
         );
 
-        const Pizza = ({ size = 28, className = "" }) => (
+        const Flag = ({ size = 28, className = "" }) => (
             <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10z"></path>
-                <path d="M12 2v10l8.66 5"></path>
-                <circle cx="8" cy="8" r="1"></circle>
-                <circle cx="14" cy="10" r="1"></circle>
-                <circle cx="10" cy="14" r="1"></circle>
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
             </svg>
         );
 
@@ -97,7 +94,7 @@
             </svg>
         );
 
-        const ItalianBeginnerApp = () => {
+        const ItalianBasicApp = () => {
             const [currentTask, setCurrentTask] = useState(null);
             const [userAnswer, setUserAnswer] = useState('');
             const [showResult, setShowResult] = useState(null);
@@ -108,355 +105,257 @@
 
             const vocabulary = {
                 questions: {
-                    'Dove': {
-                        definition: 'Где? (место)',
-                        example: 'Dove abiti? (Где ты живёшь?)',
+                    'dove': {
+                        definition: 'где, куда',
+                        example: 'Dove abiti? (Где ты живешь?)',
                         forms: 'Вопрос о месте',
                         phrases: ['Dove sei?', 'Dove vai?', 'Dove abiti?']
                     },
-                    'Quando': {
-                        definition: 'Когда? (время)',
-                        example: 'Quando arrivi? (Когда ты приезжаешь?)',
+                    'quando': {
+                        definition: 'когда',
+                        example: 'Quando arrivi? (Когда ты приедешь?)',
                         forms: 'Вопрос о времени',
-                        phrases: ['Quando parti?', 'Quando torni?', 'Quando arrivi?']
+                        phrases: ['Quando parti?', 'Quando arrivi?', 'Quando mangi?']
                     },
-                    'Quanto': {
-                        definition: 'Сколько? (количество)',
+                    'quanto': {
+                        definition: 'сколько',
                         example: 'Quanto costa? (Сколько стоит?)',
-                        forms: 'Вопрос о количестве/цене. Изменяется: quanto/quanta/quanti/quante',
-                        phrases: ['Quanto costa?', 'Quanti anni hai?', 'Quanta acqua?']
+                        forms: 'Вопрос о количестве или цене',
+                        phrases: ['Quanto costa?', 'Quanti anni hai?', 'Quanto tempo?']
                     },
-                    'Che': {
-                        definition: 'Что? Какой/какая? (предмет/вещь)',
-                        example: 'Che fai? (Что ты делаешь?)',
-                        forms: 'Вопрос о предмете или действии',
-                        phrases: ['Che fai?', 'Che giorno è?', 'Che ore sono?']
+                    'che': {
+                        definition: 'что, какой',
+                        example: 'Che ore sono? (Который час?)',
+                        forms: 'Вопрос о предмете или качестве',
+                        phrases: ['Che fai?', 'Che ore sono?', 'Che giorno è?']
                     },
-                    'Chi': {
-                        definition: 'Кто? (человек)',
+                    'chi': {
+                        definition: 'кто',
                         example: 'Chi sei? (Кто ты?)',
                         forms: 'Вопрос о человеке',
                         phrases: ['Chi sei?', 'Chi è?', 'Chi sono?']
                     },
-                    'Che cosa': {
-                        definition: 'Что? (что именно)',
-                        example: 'Che cosa mangi? (Что ты ешь?)',
-                        forms: 'Синоним "che" - более полная форма',
-                        phrases: ['Che cosa fai?', 'Che cosa vuoi?', 'Che cosa mangi?']
+                    'che cosa': {
+                        definition: 'что (полная форма)',
+                        example: 'Che cosa fai? (Что ты делаешь?)',
+                        forms: 'Синонимы: che cosa = cosa = che',
+                        phrases: ['Che cosa mangi?', 'Che cosa vuoi?', 'Che cosa studi?']
                     },
-                    'Come': {
-                        definition: 'Как? Какой? (способ/качество)',
+                    'come': {
+                        definition: 'как',
                         example: 'Come stai? (Как дела?)',
                         forms: 'Вопрос о способе или состоянии',
                         phrases: ['Come stai?', 'Come ti chiami?', 'Come va?']
                     },
-                    'Di dove': {
-                        definition: 'Откуда? (происхождение)',
+                    'di dove': {
+                        definition: 'откуда (о происхождении)',
                         example: 'Di dove sei? (Откуда ты?)',
-                        forms: 'Вопрос о происхождении',
-                        phrases: ['Di dove sei?', 'Di dove siete?', 'Di dov\'è?']
+                        forms: 'Вопрос о происхождении, родине',
+                        phrases: ['Di dove sei?', 'Di dove è?', 'Di dove siete?']
                     },
-                    'A che ora': {
-                        definition: 'В какое время? Во сколько?',
+                    'a che ora': {
+                        definition: 'в котором часу, во сколько',
                         example: 'A che ora parti? (Во сколько ты уезжаешь?)',
                         forms: 'Вопрос о конкретном времени',
-                        phrases: ['A che ora arrivi?', 'A che ora parti?', 'A che ora mangiamo?']
+                        phrases: ['A che ora arrivi?', 'A che ora mangi?', 'A che ora lavori?']
                     }
                 },
                 volere: {
-                    'volere (хотеть)': {
-                        definition: 'хотеть',
+                    'volere (io voglio)': {
+                        definition: 'хотеть (я хочу)',
                         example: 'Io voglio un caffè (Я хочу кофе)',
-                        forms: 'Спряжение: io voglio, tu vuoi, lui/lei vuole, noi vogliamo, voi volete, loro vogliono',
-                        phrases: ['Voglio andare', 'Vuoi venire?', 'Vogliamo mangiare']
+                        forms: 'Спряжение: voglio, vuoi, vuole, vogliamo, volete, vogliono',
+                        phrases: ['Voglio mangiare', 'Voglio dormire', 'Voglio un caffè']
                     },
-                    'io voglio': {
-                        definition: 'я хочу',
-                        example: 'Io voglio un gelato (Я хочу мороженое)',
-                        forms: '1-е лицо единственного числа',
-                        phrases: ['Voglio dormire', 'Voglio mangiare', 'Voglio andare']
+                    'volere (tu vuoi)': {
+                        definition: 'хотеть (ты хочешь)',
+                        example: 'Tu vuoi un tè? (Ты хочешь чай?)',
+                        forms: 'Неправильный глагол',
+                        phrases: ['Vuoi mangiare?', 'Vuoi venire?', 'Cosa vuoi?']
                     },
-                    'tu vuoi': {
-                        definition: 'ты хочешь',
-                        example: 'Tu vuoi un caffè? (Ты хочешь кофе?)',
-                        forms: '2-е лицо единственного числа',
-                        phrases: ['Vuoi venire?', 'Vuoi mangiare?', 'Cosa vuoi?']
+                    'volere (lui/lei vuole)': {
+                        definition: 'хотеть (он/она хочет)',
+                        example: 'Lei vuole studiare (Она хочет учиться)',
+                        forms: '3 лицо единственное число',
+                        phrases: ['Lui vuole partire', 'Lei vuole restare', 'Vuole un caffè']
                     },
-                    'lui/lei vuole': {
-                        definition: 'он/она хочет',
-                        example: 'Lei vuole una pizza (Она хочет пиццу)',
-                        forms: '3-е лицо единственного числа',
-                        phrases: ['Vuole andare', 'Vuole dormire', 'Cosa vuole?']
+                    'volere (noi vogliamo)': {
+                        definition: 'хотеть (мы хотим)',
+                        example: 'Noi vogliamo mangiare (Мы хотим есть)',
+                        forms: '1 лицо множественное число',
+                        phrases: ['Vogliamo andare', 'Vogliamo partire', 'Vogliamo studiare']
                     },
-                    'noi vogliamo': {
-                        definition: 'мы хотим',
-                        example: 'Noi vogliamo viaggiare (Мы хотим путешествовать)',
-                        forms: '1-е лицо множественного числа',
-                        phrases: ['Vogliamo andare', 'Vogliamo mangiare', 'Vogliamo partire']
+                    'volere (voi volete)': {
+                        definition: 'хотеть (вы хотите)',
+                        example: 'Voi volete un gelato? (Вы хотите мороженое?)',
+                        forms: '2 лицо множественное число',
+                        phrases: ['Volete mangiare?', 'Volete venire?', 'Cosa volete?']
                     },
-                    'voi volete': {
-                        definition: 'вы хотите',
-                        example: 'Voi volete ballare? (Вы хотите танцевать?)',
-                        forms: '2-е лицо множественного числа',
-                        phrases: ['Volete venire?', 'Volete mangiare?', 'Cosa volete?']
-                    },
-                    'loro vogliono': {
-                        definition: 'они хотят',
-                        example: 'Loro vogliono studiare (Они хотят учиться)',
-                        forms: '3-е лицо множественного числа',
-                        phrases: ['Vogliono andare', 'Vogliono dormire', 'Vogliono mangiare']
+                    'volere (loro vogliono)': {
+                        definition: 'хотеть (они хотят)',
+                        example: 'Loro vogliono partire (Они хотят уехать)',
+                        forms: '3 лицо множественное число',
+                        phrases: ['Vogliono mangiare', 'Vogliono studiare', 'Vogliono dormire']
                     }
                 },
                 potere: {
-                    'potere (мочь)': {
-                        definition: 'мочь, уметь',
-                        example: 'Io posso aiutare (Я могу помочь)',
-                        forms: 'Спряжение: io posso, tu puoi, lui/lei può, noi possiamo, voi potete, loro possono',
-                        phrases: ['Posso venire', 'Puoi aiutare?', 'Possiamo parlare']
-                    },
-                    'io posso': {
-                        definition: 'я могу',
+                    'potere (io posso)': {
+                        definition: 'мочь (я могу)',
                         example: 'Io posso venire (Я могу прийти)',
-                        forms: '1-е лицо единственного числа',
-                        phrases: ['Posso entrare?', 'Posso aiutare?', 'Posso parlare?']
+                        forms: 'Спряжение: posso, puoi, può, possiamo, potete, possono',
+                        phrases: ['Posso entrare?', 'Posso mangiare', 'Non posso venire']
                     },
-                    'tu puoi': {
-                        definition: 'ты можешь',
-                        example: 'Tu puoi aiutare? (Ты можешь помочь?)',
-                        forms: '2-е лицо единственного числа',
-                        phrases: ['Puoi venire?', 'Puoi aiutare?', 'Puoi aspettare?']
+                    'potere (tu puoi)': {
+                        definition: 'мочь (ты можешь)',
+                        example: 'Tu puoi aiutarmi? (Ты можешь мне помочь?)',
+                        forms: 'Неправильный глагол',
+                        phrases: ['Puoi venire?', 'Puoi aiutarmi?', 'Non puoi entrare']
                     },
-                    'lui/lei può': {
-                        definition: 'он/она может',
-                        example: 'Lei può aspettare (Она может подождать)',
-                        forms: '3-е лицо единственного числа. ВНИМАНИЕ: с accent (può)!',
-                        phrases: ['Può venire', 'Può aiutare', 'Può aspettare']
+                    'potere (lui/lei può)': {
+                        definition: 'мочь (он/она может)',
+                        example: 'Lei può parlare italiano (Она может говорить по-итальянски)',
+                        forms: '3 лицо единственное число (с ударением)',
+                        phrases: ['Lui può venire', 'Lei può aiutare', 'Può entrare']
                     },
-                    'noi possiamo': {
-                        definition: 'мы можем',
-                        example: 'Noi possiamo parlare italiano (Мы можем говорить по-итальянски)',
-                        forms: '1-е лицо множественного числа',
-                        phrases: ['Possiamo andare', 'Possiamo aiutare', 'Possiamo parlare']
+                    'potere (noi possiamo)': {
+                        definition: 'мочь (мы можем)',
+                        example: 'Noi possiamo andare (Мы можем пойти)',
+                        forms: '1 лицо множественное число',
+                        phrases: ['Possiamo mangiare', 'Possiamo partire', 'Possiamo studiare']
                     },
-                    'voi potete': {
-                        definition: 'вы можете',
-                        example: 'Voi potete venire domani? (Вы можете прийти завтра?)',
-                        forms: '2-е лицо множественного числа',
-                        phrases: ['Potete venire?', 'Potete aiutare?', 'Potete aspettare?']
+                    'potere (voi potete)': {
+                        definition: 'мочь (вы можете)',
+                        example: 'Voi potete aiutarmi? (Вы можете мне помочь?)',
+                        forms: '2 лицо множественное число',
+                        phrases: ['Potete venire?', 'Potete aiutare?', 'Non potete entrare']
                     },
-                    'loro possono': {
-                        definition: 'они могут',
-                        example: 'Loro possono aiutare (Они могут помочь)',
-                        forms: '3-е лицо множественного числа',
-                        phrases: ['Possono venire', 'Possono aiutare', 'Possono aspettare']
+                    'potere (loro possono)': {
+                        definition: 'мочь (они могут)',
+                        example: 'Loro possono venire (Они могут прийти)',
+                        forms: '3 лицо множественное число',
+                        phrases: ['Possono mangiare', 'Possono studiare', 'Possono partire']
                     }
                 },
                 lavare: {
-                    'lavare (мыть)': {
-                        definition: 'мыть',
+                    'lavare (io lavo)': {
+                        definition: 'мыть (я мою)',
                         example: 'Io lavo i piatti (Я мою посуду)',
-                        forms: 'Спряжение: io lavo, tu lavi, lui/lei lava, noi laviamo, voi lavate, loro lavano',
+                        forms: 'Спряжение: lavo, lavi, lava, laviamo, lavate, lavano',
                         phrases: ['Lavo i piatti', 'Lavo le mani', 'Lavo la macchina']
                     },
-                    'io lavo': {
-                        definition: 'я мою',
-                        example: 'Io lavo le mani (Я мою руки)',
-                        forms: '1-е лицо единственного числа',
-                        phrases: ['Lavo i piatti', 'Lavo la macchina', 'Mi lavo']
-                    },
-                    'tu lavi': {
-                        definition: 'ты моешь',
-                        example: 'Tu lavi i piatti? (Ты моешь посуду?)',
-                        forms: '2-е лицо единственного числа',
-                        phrases: ['Lavi la macchina?', 'Ti lavi?', 'Lavi i vetri?']
-                    },
-                    'lui/lei lava': {
-                        definition: 'он/она моет',
-                        example: 'Lei lava i piatti (Она моет посуду)',
-                        forms: '3-е лицо единственного числа',
-                        phrases: ['Lava la macchina', 'Si lava', 'Lava i pavimenti']
-                    },
-                    'noi laviamo': {
-                        definition: 'мы моем',
-                        example: 'Noi laviamo la macchina (Мы моем машину)',
-                        forms: '1-е лицо множественного числа',
-                        phrases: ['Laviamo i piatti', 'Ci laviamo', 'Laviamo tutto']
-                    },
-                    'voi lavate': {
-                        definition: 'вы моете',
-                        example: 'Voi lavate i vetri? (Вы моете окна?)',
-                        forms: '2-е лицо множественного числа',
-                        phrases: ['Lavate la macchina?', 'Vi lavate?', 'Lavate i piatti?']
-                    },
-                    'loro lavano': {
-                        definition: 'они моют',
-                        example: 'Loro lavano i piatti (Они моют посуду)',
-                        forms: '3-е лицо множественного числа',
-                        phrases: ['Lavano la macchina', 'Si lavano', 'Lavano tutto']
+                    'lavare i piatti': {
+                        definition: 'мыть посуду',
+                        example: 'Devo lavare i piatti (Я должен помыть посуду)',
+                        forms: 'lavare = мыть (вещи, предметы)',
+                        phrases: ['lavare i piatti', 'lavare le mani', 'lavare i denti']
                     }
                 },
                 lavorare: {
-                    'lavorare (работать)': {
-                        definition: 'работать',
+                    'lavorare (io lavoro)': {
+                        definition: 'работать (я работаю)',
                         example: 'Io lavoro in ufficio (Я работаю в офисе)',
-                        forms: 'Спряжение: io lavoro, tu lavori, lui/lei lavora, noi lavoriamo, voi lavorate, loro lavorano',
-                        phrases: ['Lavoro qui', 'Lavoro in banca', 'Lavoro ogni giorno']
+                        forms: 'Спряжение: lavoro, lavori, lavora, lavoriamo, lavorate, lavorano',
+                        phrases: ['Lavoro in ufficio', 'Lavoro tutti i giorni', 'Lavoro a Milano']
                     },
-                    'io lavoro': {
-                        definition: 'я работаю',
-                        example: 'Io lavoro in banca (Я работаю в банке)',
-                        forms: '1-е лицо единственного числа',
-                        phrases: ['Lavoro qui', 'Lavoro molto', 'Lavoro in ufficio']
+                    'lavorare (tu lavori)': {
+                        definition: 'работать (ты работаешь)',
+                        example: 'Tu lavori domani? (Ты работаешь завтра?)',
+                        forms: 'lavorare = работать (профессионально)',
+                        phrases: ['Dove lavori?', 'Lavori domani?', 'Lavori molto']
                     },
-                    'tu lavori': {
-                        definition: 'ты работаешь',
-                        example: 'Tu lavori in ospedale? (Ты работаешь в больнице?)',
-                        forms: '2-е лицо единственного числа',
-                        phrases: ['Dove lavori?', 'Lavori oggi?', 'Lavori molto?']
+                    'lavorare (lui/lei lavora)': {
+                        definition: 'работать (он/она работает)',
+                        example: 'Lei lavora in ospedale (Она работает в больнице)',
+                        forms: '3 лицо единственное число',
+                        phrases: ['Lui lavora qui', 'Lei lavora domani', 'Lavora molto']
+                    }
+                },
+                professions: {
+                    'insegnante': {
+                        definition: 'учитель/учительница',
+                        example: 'Sono insegnante (Я учитель/учительница)',
+                        forms: 'Одинаковая форма для мужского и женского рода',
+                        phrases: ['Sono insegnante', 'Lei è insegnante', 'Insegnante di italiano']
                     },
-                    'lui/lei lavora': {
-                        definition: 'он/она работает',
-                        example: 'Lei lavora in un ristorante (Она работает в ресторане)',
-                        forms: '3-е лицо единственного числа',
-                        phrases: ['Lavora qui', 'Lavora molto', 'Dove lavora?']
+                    'infermiere/infermiera': {
+                        definition: 'медбрат/медсестра',
+                        example: 'Lui è infermiere (Он медбрат)',
+                        forms: 'infermiere (м.р.), infermiera (ж.р.)',
+                        phrases: ['Sono infermiera', 'Lavoro come infermiere', 'Infermiere in ospedale']
                     },
-                    'noi lavoriamo': {
-                        definition: 'мы работаем',
-                        example: 'Noi lavoriamo insieme (Мы работаем вместе)',
-                        forms: '1-е лицо множественного числа',
-                        phrases: ['Lavoriamo qui', 'Lavoriamo molto', 'Lavoriamo insieme']
-                    },
-                    'voi lavorate': {
-                        definition: 'вы работаете',
-                        example: 'Voi lavorate in centro? (Вы работаете в центре?)',
-                        forms: '2-е лицо множественного числа',
-                        phrases: ['Dove lavorate?', 'Lavorate oggi?', 'Lavorate insieme?']
-                    },
-                    'loro lavorano': {
-                        definition: 'они работают',
-                        example: 'Loro lavorano in banca (Они работают в банке)',
-                        forms: '3-е лицо множественного числа',
-                        phrases: ['Lavorano qui', 'Lavorano molto', 'Lavorano insieme']
+                    'medico': {
+                        definition: 'врач',
+                        example: 'Lei è medico (Она врач)',
+                        forms: 'Обычно не меняется по родам (il medico / la medico)',
+                        phrases: ['Sono medico', 'Lavoro come medico', 'Medico in ospedale']
                     }
                 }
             };
 
             const sampleTasks = [
-                // Question words - basic understanding
-                {type:'translation_it_ru',category:'questions',question:'Переведите: "Dove abiti?"',answer:'где ты живёшь',alternatives:['где ты живёшь','где ты живешь','где вы живёте'],word:'Dove'},
-                {type:'translation_it_ru',category:'questions',question:'Переведите: "Quando arrivi?"',answer:'когда ты приезжаешь',alternatives:['когда ты приезжаешь','когда ты приедешь','когда вы приезжаете'],word:'Quando'},
-                {type:'translation_it_ru',category:'questions',question:'Переведите: "Quanto costa?"',answer:'сколько стоит',alternatives:['сколько стоит','сколько это стоит'],word:'Quanto'},
-                {type:'translation_it_ru',category:'questions',question:'Переведите: "Chi sei?"',answer:'кто ты',alternatives:['кто ты','кто вы'],word:'Chi'},
-                {type:'translation_it_ru',category:'questions',question:'Переведите: "Come stai?"',answer:'как дела',alternatives:['как дела','как ты','как поживаешь'],word:'Come'},
-                {type:'translation_it_ru',category:'questions',question:'Переведите: "Di dove sei?"',answer:'откуда ты',alternatives:['откуда ты','откуда вы'],word:'Di dove'},
-                {type:'translation_it_ru',category:'questions',question:'Переведите: "A che ora parti?"',answer:'во сколько ты уезжаешь',alternatives:['во сколько ты уезжаешь','в какое время ты уезжаешь','когда ты уезжаешь'],word:'A che ora'},
+                // Question words - focusing on distinctions
+                {type:'multiple_choice',category:'questions',question:'___ abiti? (Где ты живешь?)',options:['Dove','Quando','Quanto','Come'],correct:0,word:'dove'},
+                {type:'multiple_choice',category:'questions',question:'___ arrivi? (Когда ты приезжаешь?)',options:['Quando','Dove','Chi','Quanto'],correct:0,word:'quando'},
+                {type:'multiple_choice',category:'questions',question:'___ costa? (Сколько стоит?)',options:['Quanto','Quando','Dove','Chi'],correct:0,word:'quanto'},
+                {type:'multiple_choice',category:'questions',question:'___ sei? (Кто ты?)',options:['Chi','Che','Dove','Come'],correct:0,word:'chi'},
+                {type:'multiple_choice',category:'questions',question:'___ stai? (Как дела?)',options:['Come','Chi','Che','Dove'],correct:0,word:'come'},
+                {type:'multiple_choice',category:'questions',question:'___ sei? (Откуда ты?)',options:['Di dove','Dove','Quando','Come'],correct:0,word:'di dove'},
+                {type:'multiple_choice',category:'questions',question:'___ parti? (Во сколько ты уезжаешь?)',options:['A che ora','Quando','Quanto','Dove'],correct:0,word:'a che ora'},
+                {type:'translation_it_ru',category:'questions',question:'Переведите: "Che cosa fai?"',answer:'что ты делаешь',alternatives:['что ты делаешь','что делаешь'],word:'che cosa'},
+                {type:'fill_blanks',category:'questions',question:'Заполните: "___ vai? - Vado a casa" (Куда идешь?)',answer:'dove',hint:'(вопрос о месте)',word:'dove'},
+                {type:'fill_blanks',category:'questions',question:'Заполните: "___ ti chiami?" (Как тебя зовут?)',answer:'come',hint:'(вопрос о имени)',word:'come'},
+                {type:'situational',category:'questions',question:'Спросите по-итальянски: "Сколько это стоит?"',context:'Используйте quanto',expectedElements:['quanto','costa'],word:'quanto'},
+                {type:'listening',category:'questions',question:'Прослушайте и повторите: "Dove abiti?"',audio:'Dove abiti?',word:'dove'},
                 
-                // Question words - fill in correct one
-                {type:'multiple_choice',category:'questions',question:'___ abiti? (Где ты живёшь?)',options:['Dove','Quando','Chi','Come'],correct:0,word:'Dove'},
-                {type:'multiple_choice',category:'questions',question:'___ sei? (Кто ты?)',options:['Chi','Dove','Che','Come'],correct:0,word:'Chi'},
-                {type:'multiple_choice',category:'questions',question:'___ costa? (Сколько стоит?)',options:['Quanto','Quando','Chi','Dove'],correct:0,word:'Quanto'},
-                {type:'multiple_choice',category:'questions',question:'___ stai? (Как дела?)',options:['Come','Chi','Dove','Quando'],correct:0,word:'Come'},
-                {type:'multiple_choice',category:'questions',question:'___ arrivi? (Когда ты приезжаешь?)',options:['Quando','Dove','Chi','Quanto'],correct:0,word:'Quando'},
-                {type:'multiple_choice',category:'questions',question:'___ dove sei? (Откуда ты?)',options:['Di','A','In','Per'],correct:0,word:'Di dove'},
-                {type:'multiple_choice',category:'questions',question:'___ che ora parti? (Во сколько ты уезжаешь?)',options:['A','Di','In','Per'],correct:0,word:'A che ora'},
-                {type:'multiple_choice',category:'questions',question:'___ fai? (Что ты делаешь?)',options:['Che','Chi','Dove','Come'],correct:0,word:'Che'},
+                // VOLERE - conjugation
+                {type:'multiple_choice',category:'volere',question:'Io ___ un caffè (Я хочу кофе)',options:['voglio','vuoi','vuole','vogliono'],correct:0,word:'volere (io voglio)'},
+                {type:'multiple_choice',category:'volere',question:'Tu ___ mangiare? (Ты хочешь есть?)',options:['vuoi','voglio','vuole','volete'],correct:0,word:'volere (tu vuoi)'},
+                {type:'multiple_choice',category:'volere',question:'Lei ___ studiare (Она хочет учиться)',options:['vuole','vuoi','voglio','vogliono'],correct:0,word:'volere (lui/lei vuole)'},
+                {type:'multiple_choice',category:'volere',question:'Noi ___ partire (Мы хотим уехать)',options:['vogliamo','volete','vogliono','voglio'],correct:0,word:'volere (noi vogliamo)'},
+                {type:'multiple_choice',category:'volere',question:'Voi ___ venire? (Вы хотите прийти?)',options:['volete','vogliamo','vogliono','vuole'],correct:0,word:'volere (voi volete)'},
+                {type:'multiple_choice',category:'volere',question:'Loro ___ mangiare (Они хотят есть)',options:['vogliono','volete','vogliamo','vuole'],correct:0,word:'volere (loro vogliono)'},
+                {type:'fill_blanks',category:'volere',question:'Заполните: "Io ___ dormire" (Я хочу спать)',answer:'voglio',hint:'(1 лицо ед.ч.)',word:'volere (io voglio)'},
+                {type:'situational',category:'volere',question:'Скажите по-итальянски: "Я хочу кофе"',context:'Используйте volere',expectedElements:['voglio','caffè'],word:'volere (io voglio)'},
+                {type:'listening',category:'volere',question:'Прослушайте и повторите: "Voglio un caffè"',audio:'Voglio un caffè',word:'volere (io voglio)'},
                 
-                // Fill in blanks
-                {type:'fill_blanks',category:'questions',question:'Заполните: "___ ti chiami?" (Как тебя зовут?)',answer:'come',hint:'(как?)',word:'Come'},
-                {type:'fill_blanks',category:'questions',question:'Заполните: "___ anni hai?" (Сколько тебе лет?)',answer:'quanti',hint:'(сколько? - множественное число)',word:'Quanto'},
-                {type:'fill_blanks',category:'questions',question:'Заполните: "___ vai?" (Куда ты идёшь?)',answer:'dove',hint:'(где? куда?)',word:'Dove'},
+                // POTERE - conjugation
+                {type:'multiple_choice',category:'potere',question:'Io ___ venire (Я могу прийти)',options:['posso','puoi','può','possono'],correct:0,word:'potere (io posso)'},
+                {type:'multiple_choice',category:'potere',question:'Tu ___ aiutarmi? (Ты можешь мне помочь?)',options:['puoi','posso','può','potete'],correct:0,word:'potere (tu puoi)'},
+                {type:'multiple_choice',category:'potere',question:'Lei ___ parlare italiano (Она может говорить по-итальянски)',options:['può','puoi','posso','possono'],correct:0,word:'potere (lui/lei può)'},
+                {type:'multiple_choice',category:'potere',question:'Noi ___ andare (Мы можем пойти)',options:['possiamo','potete','possono','posso'],correct:0,word:'potere (noi possiamo)'},
+                {type:'multiple_choice',category:'potere',question:'Voi ___ venire? (Вы можете прийти?)',options:['potete','possiamo','possono','può'],correct:0,word:'potere (voi potete)'},
+                {type:'multiple_choice',category:'potere',question:'Loro ___ mangiare (Они могут есть)',options:['possono','potete','possiamo','può'],correct:0,word:'potere (loro possono)'},
+                {type:'fill_blanks',category:'potere',question:'Заполните: "Io ___ entrare?" (Я могу войти?)',answer:'posso',hint:'(1 лицо ед.ч.)',word:'potere (io posso)'},
+                {type:'situational',category:'potere',question:'Спросите по-итальянски: "Ты можешь помочь?"',context:'Используйте potere + aiutare',expectedElements:['puoi','aiutare'],word:'potere (tu puoi)'},
+                {type:'listening',category:'potere',question:'Прослушайте и повторите: "Posso entrare?"',audio:'Posso entrare?',word:'potere (io posso)'},
                 
-                // Listening
-                {type:'listening',category:'questions',question:'Прослушайте и повторите: "Dove abiti?"',audio:'Dove abiti?',word:'Dove'},
-                {type:'listening',category:'questions',question:'Прослушайте и повторите: "Come ti chiami?"',audio:'Come ti chiami?',word:'Come'},
-                {type:'listening',category:'questions',question:'Прослушайте и повторите: "Quanto costa?"',audio:'Quanto costa?',word:'Quanto'},
+                // LAVARE vs LAVORARE - key distinction
+                {type:'multiple_choice',category:'lavare',question:'Io ___ i piatti ogni sera (Я мою посуду каждый вечер)',options:['lavo','lavoro','lavi','lavori'],correct:0,word:'lavare (io lavo)'},
+                {type:'multiple_choice',category:'lavorare',question:'Io ___ in ufficio (Я работаю в офисе)',options:['lavoro','lavo','lavori','lavi'],correct:0,word:'lavorare (io lavoro)'},
+                {type:'multiple_choice',category:'lavare',question:'Devo ___ le mani (Я должен помыть руки)',options:['lavare','lavorare','lavo','lavoro'],correct:0,word:'lavare i piatti'},
+                {type:'multiple_choice',category:'lavorare',question:'Tu ___ domani? (Ты работаешь завтра?)',options:['lavori','lavi','lavoro','lavo'],correct:0,word:'lavorare (tu lavori)'},
+                {type:'multiple_choice',category:'lavorare',question:'Lei ___ in ospedale (Она работает в больнице)',options:['lavora','lava','lavori','lavi'],correct:0,word:'lavorare (lui/lei lavora)'},
+                {type:'fill_blanks',category:'lavare',question:'Заполните: "Io ___ i piatti" (Я мою посуду)',answer:'lavo',hint:'(мыть посуду)',word:'lavare (io lavo)'},
+                {type:'fill_blanks',category:'lavorare',question:'Заполните: "Io ___ a Milano" (Я работаю в Милане)',answer:'lavoro',hint:'(работать)',word:'lavorare (io lavoro)'},
+                {type:'situational',category:'lavare',question:'Скажите по-итальянски: "Я мою посуду"',context:'Используйте lavare i piatti',expectedElements:['lavo','piatti'],word:'lavare i piatti'},
+                {type:'situational',category:'lavorare',question:'Скажите по-итальянски: "Я работаю в офисе"',context:'Используйте lavorare',expectedElements:['lavoro','ufficio'],word:'lavorare (io lavoro)'},
+                {type:'listening',category:'lavare',question:'Прослушайте и повторите: "Lavo i piatti"',audio:'Lavo i piatti',word:'lavare i piatti'},
+                {type:'listening',category:'lavorare',question:'Прослушайте и повторите: "Lavoro in ufficio"',audio:'Lavoro in ufficio',word:'lavorare (io lavoro)'},
                 
-                // Volere conjugation - recognition
-                {type:'translation_it_ru',category:'volere',question:'Переведите: "Io voglio un caffè"',answer:'я хочу кофе',alternatives:['я хочу кофе','я хочу один кофе'],word:'io voglio'},
-                {type:'translation_it_ru',category:'volere',question:'Переведите: "Tu vuoi venire?"',answer:'ты хочешь прийти',alternatives:['ты хочешь прийти','ты хочешь приехать'],word:'tu vuoi'},
-                {type:'translation_it_ru',category:'volere',question:'Переведите: "Lei vuole una pizza"',answer:'она хочет пиццу',alternatives:['она хочет пиццу','она хочет одну пиццу'],word:'lui/lei vuole'},
-                {type:'translation_it_ru',category:'volere',question:'Переведите: "Noi vogliamo mangiare"',answer:'мы хотим есть',alternatives:['мы хотим есть','мы хотим кушать','мы хотим поесть'],word:'noi vogliamo'},
+                // Professions
+                {type:'multiple_choice',category:'professions',question:'Sono ___ di italiano (Я учитель итальянского)',options:['insegnante','infermiere','medico','studente'],correct:0,word:'insegnante'},
+                {type:'multiple_choice',category:'professions',question:'Lui è ___ in ospedale (Он медбрат в больнице)',options:['infermiere','insegnante','medico','dottore'],correct:0,word:'infermiere/infermiera'},
+                {type:'multiple_choice',category:'professions',question:'Lei è ___ (Она врач)',options:['medico','infermiera','insegnante','dottoressa'],correct:0,word:'medico'},
+                {type:'translation_it_ru',category:'professions',question:'Переведите: "Sono insegnante"',answer:'я учитель',alternatives:['я учитель','я учительница'],word:'insegnante'},
+                {type:'fill_blanks',category:'professions',question:'Заполните: "Lavoro come ___" (Я работаю врачом)',answer:'medico',hint:'(профессия: врач)',word:'medico'},
+                {type:'situational',category:'professions',question:'Скажите по-итальянски: "Я учитель"',context:'Используйте insegnante',expectedElements:['sono','insegnante'],word:'insegnante'},
+                {type:'listening',category:'professions',question:'Прослушайте и повторите: "Sono insegnante"',audio:'Sono insegnante',word:'insegnante'},
                 
-                // Volere conjugation - fill in
-                {type:'multiple_choice',category:'volere',question:'Io ___ un gelato (Я хочу мороженое)',options:['voglio','vuoi','vuole','vogliono'],correct:0,word:'io voglio'},
-                {type:'multiple_choice',category:'volere',question:'Tu ___ partire? (Ты хочешь уехать?)',options:['vuoi','voglio','vuole','volete'],correct:0,word:'tu vuoi'},
-                {type:'multiple_choice',category:'volere',question:'Lei ___ dormire (Она хочет спать)',options:['vuole','voglio','vuoi','vogliono'],correct:0,word:'lui/lei vuole'},
-                {type:'multiple_choice',category:'volere',question:'Noi ___ andare al mare (Мы хотим поехать на море)',options:['vogliamo','volete','vogliono','vuole'],correct:0,word:'noi vogliamo'},
-                {type:'multiple_choice',category:'volere',question:'Voi ___ ballare? (Вы хотите танцевать?)',options:['volete','vogliamo','vogliono','vuole'],correct:0,word:'voi volete'},
-                {type:'multiple_choice',category:'volere',question:'Loro ___ studiare (Они хотят учиться)',options:['vogliono','volete','vogliamo','vuole'],correct:0,word:'loro vogliono'},
-                
-                // Volere - fill blanks
-                {type:'fill_blanks',category:'volere',question:'Заполните: "Io ___ andare" (Я хочу пойти)',answer:'voglio',hint:'(1-е лицо ед.ч.)',word:'io voglio'},
-                {type:'fill_blanks',category:'volere',question:'Заполните: "Tu ___ un caffè?" (Ты хочешь кофе?)',answer:'vuoi',hint:'(2-е лицо ед.ч.)',word:'tu vuoi'},
-                {type:'fill_blanks',category:'volere',question:'Заполните: "Noi ___ mangiare" (Мы хотим есть)',answer:'vogliamo',hint:'(1-е лицо мн.ч.)',word:'noi vogliamo'},
-                
-                // Volere listening
-                {type:'listening',category:'volere',question:'Прослушайте и повторите: "Voglio un gelato"',audio:'Voglio un gelato',word:'io voglio'},
-                {type:'listening',category:'volere',question:'Прослушайте и повторите: "Vuoi venire?"',audio:'Vuoi venire?',word:'tu vuoi'},
-                
-                // Potere conjugation - recognition
-                {type:'translation_it_ru',category:'potere',question:'Переведите: "Io posso aiutare"',answer:'я могу помочь',alternatives:['я могу помочь'],word:'io posso'},
-                {type:'translation_it_ru',category:'potere',question:'Переведите: "Tu puoi venire?"',answer:'ты можешь прийти',alternatives:['ты можешь прийти','ты можешь приехать'],word:'tu puoi'},
-                {type:'translation_it_ru',category:'potere',question:'Переведите: "Lei può aspettare"',answer:'она может подождать',alternatives:['она может подождать','она может ждать'],word:'lui/lei può'},
-                {type:'translation_it_ru',category:'potere',question:'Переведите: "Noi possiamo parlare"',answer:'мы можем говорить',alternatives:['мы можем говорить','мы можем разговаривать'],word:'noi possiamo'},
-                
-                // Potere conjugation - fill in
-                {type:'multiple_choice',category:'potere',question:'Io ___ venire (Я могу прийти)',options:['posso','puoi','può','possono'],correct:0,word:'io posso'},
-                {type:'multiple_choice',category:'potere',question:'Tu ___ aiutare? (Ты можешь помочь?)',options:['puoi','posso','può','potete'],correct:0,word:'tu puoi'},
-                {type:'multiple_choice',category:'potere',question:'Lei ___ aspettare (Она может подождать)',options:['può','posso','puoi','possono'],correct:0,word:'lui/lei può'},
-                {type:'multiple_choice',category:'potere',question:'Noi ___ andare (Мы можем пойти)',options:['possiamo','potete','possono','può'],correct:0,word:'noi possiamo'},
-                {type:'multiple_choice',category:'potere',question:'Voi ___ venire? (Вы можете прийти?)',options:['potete','possiamo','possono','può'],correct:0,word:'voi potete'},
-                {type:'multiple_choice',category:'potere',question:'Loro ___ aiutare (Они могут помочь)',options:['possono','potete','possiamo','può'],correct:0,word:'loro possono'},
-                
-                // Potere - fill blanks
-                {type:'fill_blanks',category:'potere',question:'Заполните: "Io ___ entrare?" (Я могу войти?)',answer:'posso',hint:'(1-е лицо ед.ч.)',word:'io posso'},
-                {type:'fill_blanks',category:'potere',question:'Заполните: "Tu ___ aiutare?" (Ты можешь помочь?)',answer:'puoi',hint:'(2-е лицо ед.ч.)',word:'tu puoi'},
-                {type:'fill_blanks',category:'potere',question:'Заполните: "Noi ___ parlare" (Мы можем говорить)',answer:'possiamo',hint:'(1-е лицо мн.ч.)',word:'noi possiamo'},
-                
-                // Potere listening
-                {type:'listening',category:'potere',question:'Прослушайте и повторите: "Posso entrare?"',audio:'Posso entrare?',word:'io posso'},
-                {type:'listening',category:'potere',question:'Прослушайте и повторите: "Puoi aiutare?"',audio:'Puoi aiutare?',word:'tu puoi'},
-                
-                // Lavare vs Lavorare - recognition
-                {type:'translation_it_ru',category:'lavare',question:'Переведите: "Io lavo i piatti"',answer:'я мою посуду',alternatives:['я мою посуду','я мою тарелки'],word:'io lavo'},
-                {type:'translation_it_ru',category:'lavare',question:'Переведите: "Tu lavi la macchina?"',answer:'ты моешь машину',alternatives:['ты моешь машину'],word:'tu lavi'},
-                {type:'translation_it_ru',category:'lavorare',question:'Переведите: "Io lavoro in banca"',answer:'я работаю в банке',alternatives:['я работаю в банке'],word:'io lavoro'},
-                {type:'translation_it_ru',category:'lavorare',question:'Переведите: "Tu lavori in ospedale?"',answer:'ты работаешь в больнице',alternatives:['ты работаешь в больнице'],word:'tu lavori'},
-                
-                // Lavare vs Lavorare - critical distinction
-                {type:'multiple_choice',category:'lavare',question:'Io ___ i piatti (Я мою посуду)',options:['lavo','lavoro','lavi','lavori'],correct:0,word:'io lavo'},
-                {type:'multiple_choice',category:'lavorare',question:'Io ___ in ufficio (Я работаю в офисе)',options:['lavoro','lavo','lavori','lavi'],correct:0,word:'io lavoro'},
-                {type:'multiple_choice',category:'lavare',question:'Tu ___ la macchina? (Ты моешь машину?)',options:['lavi','lavori','lavo','lavoro'],correct:0,word:'tu lavi'},
-                {type:'multiple_choice',category:'lavorare',question:'Tu ___ qui? (Ты работаешь здесь?)',options:['lavori','lavi','lavoro','lavo'],correct:0,word:'tu lavori'},
-                {type:'multiple_choice',category:'lavare',question:'Lei ___ i vetri (Она моет окна)',options:['lava','lavora','laviamo','lavoriamo'],correct:0,word:'lui/lei lava'},
-                {type:'multiple_choice',category:'lavorare',question:'Lei ___ in un ristorante (Она работает в ресторане)',options:['lavora','lava','lavoriamo','laviamo'],correct:0,word:'lui/lei lavora'},
-                
-                // More lavare/lavorare
-                {type:'multiple_choice',category:'lavare',question:'Noi ___ la macchina (Мы моем машину)',options:['laviamo','lavoriamo','lavate','lavorate'],correct:0,word:'noi laviamo'},
-                {type:'multiple_choice',category:'lavorare',question:'Noi ___ insieme (Мы работаем вместе)',options:['lavoriamo','laviamo','lavorate','lavate'],correct:0,word:'noi lavoriamo'},
-                {type:'multiple_choice',category:'lavare',question:'Voi ___ i piatti? (Вы моете посуду?)',options:['lavate','lavorate','laviamo','lavoriamo'],correct:0,word:'voi lavate'},
-                {type:'multiple_choice',category:'lavorare',question:'Voi ___ in centro? (Вы работаете в центре?)',options:['lavorate','lavate','lavoriamo','laviamo'],correct:0,word:'voi lavorate'},
-                {type:'multiple_choice',category:'lavare',question:'Loro ___ tutto (Они моют всё)',options:['lavano','lavorano','lavate','lavorate'],correct:0,word:'loro lavano'},
-                {type:'multiple_choice',category:'lavorare',question:'Loro ___ molto (Они много работают)',options:['lavorano','lavano','lavorate','lavate'],correct:0,word:'loro lavorano'},
-                
-                // Fill blanks lavare/lavorare
-                {type:'fill_blanks',category:'lavare',question:'Заполните: "Io ___ le mani" (Я мою руки)',answer:'lavo',hint:'(мыть)',word:'io lavo'},
-                {type:'fill_blanks',category:'lavorare',question:'Заполните: "Io ___ qui" (Я работаю здесь)',answer:'lavoro',hint:'(работать)',word:'io lavoro'},
-                {type:'fill_blanks',category:'lavare',question:'Заполните: "Tu ___ i piatti?" (Ты моешь посуду?)',answer:'lavi',hint:'(мыть)',word:'tu lavi'},
-                {type:'fill_blanks',category:'lavorare',question:'Заполните: "Tu ___ oggi?" (Ты работаешь сегодня?)',answer:'lavori',hint:'(работать)',word:'tu lavori'},
-                
-                // Listening lavare/lavorare
-                {type:'listening',category:'lavare',question:'Прослушайте и повторите: "Lavo i piatti"',audio:'Lavo i piatti',word:'io lavo'},
-                {type:'listening',category:'lavorare',question:'Прослушайте и повторите: "Lavoro in banca"',audio:'Lavoro in banca',word:'io lavoro'},
-                {type:'listening',category:'lavare',question:'Прослушайте и повторите: "Lavi la macchina?"',audio:'Lavi la macchina?',word:'tu lavi'},
-                {type:'listening',category:'lavorare',question:'Прослушайте и повторите: "Lavori qui?"',audio:'Lavori qui?',word:'tu lavori'},
-                
-                // Situational tasks
-                {type:'situational',category:'questions',question:'Ситуация: Спросите откуда человек',context:'Используйте правильное вопросительное слово',expectedElements:['di dove'],word:'Di dove'},
-                {type:'situational',category:'volere',question:'Ситуация: Скажите что вы хотите кофе',context:'Используйте глагол volere',expectedElements:['voglio','caffè'],word:'io voglio'},
-                {type:'situational',category:'potere',question:'Ситуация: Спросите можете ли вы войти',context:'Используйте глагол potere',expectedElements:['posso','entrare'],word:'io posso'},
-                {type:'situational',category:'lavare',question:'Ситуация: Скажите что вы моете посуду',context:'Используйте глагол lavare',expectedElements:['lavo','piatti'],word:'io lavo'},
-                {type:'situational',category:'lavorare',question:'Ситуация: Скажите что вы работаете в банке',context:'Используйте глагол lavorare',expectedElements:['lavoro','banca'],word:'io lavoro'}
+                // Mixed tasks for confusion prevention
+                {type:'multiple_choice',category:'all',question:'___ vai? - Vado al lavoro (Куда идешь? - Иду на работу)',options:['Dove','Quando','Quanto','Come'],correct:0,word:'mixed'},
+                {type:'multiple_choice',category:'all',question:'Io ___ i piatti e poi ___ (Я мою посуду и потом работаю)',options:['lavo, lavoro','lavoro, lavo','lavo, lavo','lavoro, lavoro'],correct:0,word:'mixed'},
+                {type:'multiple_choice',category:'all',question:'___ stai? - Bene, grazie (Как дела? - Хорошо, спасибо)',options:['Come','Dove','Quando','Chi'],correct:0,word:'mixed'},
+                {type:'multiple_choice',category:'all',question:'Tu ___ venire domani? (Ты можешь прийти завтра?)',options:['puoi','vuoi','posso','voglio'],correct:0,word:'mixed'}
             ];
 
             const generateRandomTask = () => {
@@ -665,7 +564,7 @@
                         return (
                             <div className="space-y-4">
                                 <div className="bg-yellow-50 p-4 rounded-lg">
-                                    <h3 className="font-semibold text-yellow-800">Ситуация:</h3>
+                                    <h3 className="font-semibold text-yellow-800">Задание:</h3>
                                     <p className="text-yellow-700">{currentTask.question}</p>
                                     {currentTask.context && (
                                         <p className="text-sm text-yellow-600 mt-2">
@@ -673,12 +572,13 @@
                                         </p>
                                     )}
                                 </div>
-                                <textarea
+                                <input
+                                    type="text"
                                     value={userAnswer}
                                     onChange={(e) => setUserAnswer(e.target.value)}
-                                    placeholder="Scrivi la risposta..."
+                                    placeholder="Scrivi la tua risposta..."
                                     className="w-full p-3 border border-gray-300 rounded-lg"
-                                    rows="3"
+                                    onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
                                 />
                             </div>
                         );
@@ -694,7 +594,7 @@
                                     type="text"
                                     value={userAnswer}
                                     onChange={(e) => setUserAnswer(e.target.value)}
-                                    placeholder="Scrivi la risposta..."
+                                    placeholder="Scrivi la tua risposta..."
                                     className="w-full p-3 border border-gray-300 rounded-lg"
                                     onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
                                 />
@@ -719,18 +619,19 @@
             const renderVocabulary = () => (
                 <div className="space-y-6">
                     {Object.entries(vocabulary).map(([category, words]) => (
-                        <div key={category} className="bg-white rounded-lg p-6 shadow-sm border border-green-200">
+                        <div key={category} className="bg-white rounded-lg p-6 shadow-sm border">
                             <h3 className="text-xl font-semibold mb-4 text-green-700">
                                 {category === 'questions' ? '❓ Вопросительные слова' :
                                  category === 'volere' ? '💚 Volere (хотеть)' : 
-                                 category === 'potere' ? '✨ Potere (мочь)' :
-                                 category === 'lavare' ? '🧼 Lavare (мыть)' : '💼 Lavorare (работать)'}
+                                 category === 'potere' ? '💪 Potere (мочь)' :
+                                 category === 'lavare' ? '🧼 Lavare (мыть)' :
+                                 category === 'lavorare' ? '💼 Lavorare (работать)' : '👨‍⚕️ Профессии'}
                             </h3>
                             <div className="grid gap-4">
                                 {Object.entries(words).map(([word, info]) => (
-                                    <div key={word} className="border-l-4 border-green-300 pl-4">
+                                    <div key={word} className="border-l-4 border-green-200 pl-4">
                                         <div className="flex items-center justify-between">
-                                            <h4 className="font-semibold text-lg text-green-800">{word}</h4>
+                                            <h4 className="font-semibold text-lg">{word}</h4>
                                             <button
                                                 onClick={() => speakText(word)}
                                                 className="text-green-600 hover:text-green-800"
@@ -740,10 +641,10 @@
                                         </div>
                                         <p className="text-gray-600">{info.definition}</p>
                                         <div className="flex items-center gap-2 mt-2">
-                                            <p className="text-green-700 flex-1">{info.example}</p>
+                                            <p className="text-blue-700 flex-1">{info.example}</p>
                                             <button
                                                 onClick={() => speakText(info.example.split(' (')[0])}
-                                                className="text-green-600 hover:text-green-800"
+                                                className="text-blue-600 hover:text-blue-800"
                                             >
                                                 <Volume2 size={16} />
                                             </button>
@@ -775,14 +676,14 @@
             );
 
             return (
-                <div className="max-w-4xl mx-auto bg-gradient-to-b from-green-50 to-white min-h-screen">
+                <div className="max-w-4xl mx-auto bg-gradient-to-b from-green-50 to-red-50 min-h-screen">
                     <div className="bg-gradient-to-r from-green-600 to-red-600 text-white p-6">
                         <h1 className="text-2xl font-bold flex items-center gap-2">
-                            <Pizza size={28} />
-                            Italiano per principianti 🇮🇹
+                            <Flag size={28} />
+                            Italiano A0-A1 🇮🇹
                         </h1>
                         <p className="mt-2 opacity-90">
-                            Вопросительные слова, volere, potere, lavare/lavorare
+                            Вопросы • Volere & Potere • Lavare vs Lavorare • Professioni
                         </p>
                         <div className="mt-4 flex gap-4 text-sm">
                             <span>Правильно: {score.correct}</span>
@@ -820,19 +721,20 @@
                         {activeTab === 'tasks' && (
                             <div className="space-y-6">
                                 <div className="flex gap-2 flex-wrap">
-                                    <button onClick={() => setSelectedCategory('all')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'all' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>Tutto</button>
+                                    <button onClick={() => setSelectedCategory('all')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'all' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>Tutti</button>
                                     <button onClick={() => setSelectedCategory('questions')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'questions' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>❓ Domande</button>
                                     <button onClick={() => setSelectedCategory('volere')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'volere' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>💚 Volere</button>
-                                    <button onClick={() => setSelectedCategory('potere')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'potere' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>✨ Potere</button>
+                                    <button onClick={() => setSelectedCategory('potere')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'potere' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>💪 Potere</button>
                                     <button onClick={() => setSelectedCategory('lavare')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'lavare' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>🧼 Lavare</button>
                                     <button onClick={() => setSelectedCategory('lavorare')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'lavorare' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>💼 Lavorare</button>
+                                    <button onClick={() => setSelectedCategory('professions')} className={`px-4 py-2 rounded-lg ${selectedCategory === 'professions' ? 'bg-green-600 text-white' : 'bg-white border hover:bg-green-50'}`}>👨‍⚕️ Professioni</button>
                                 </div>
 
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-green-200">
+                                <div className="bg-white rounded-lg p-6 shadow-sm border">
                                     {showResult !== null && (
                                         <div className={`mb-4 p-4 rounded-lg flex items-center gap-2 ${showResult ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                                             {showResult ? <CheckCircle size={20} /> : <XCircle size={20} />}
-                                            {showResult ? 'Corretto! Bravissima! 🎉' : `Sbagliato. Risposta corretta: ${currentTask?.answer || 'vedi sopra'}`}
+                                            {showResult ? 'Corretto! 🎉' : `Sbagliato. Risposta corretta: ${currentTask?.answer || currentTask?.options?.[currentTask?.correct] || 'vedi sopra'}`}
                                         </div>
                                     )}
                                     
@@ -845,14 +747,14 @@
                                             ) : (
                                                 <button onClick={generateRandomTask} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2"><RotateCcw size={16} />Prossimo</button>
                                             )}
-                                            <button onClick={generateRandomTask} className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 flex items-center gap-2"><RotateCcw size={16} />Salta</button>
+                                            <button onClick={generateRandomTask} className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 flex items-center gap-2"><RotateCcw size={16} />Nuovo</button>
                                         </div>
                                     )}
                                 </div>
 
                                 {currentTask?.word && vocabulary[currentTask.category]?.[currentTask.word] && (
-                                    <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-                                        <h3 className="font-semibold text-green-800 mb-2">Parola corrente:</h3>
+                                    <div className="bg-green-50 rounded-lg p-4">
+                                        <h3 className="font-semibold text-green-800 mb-2">Parola studiata:</h3>
                                         <div className="text-green-700">
                                             <p className="font-medium">{currentTask.word}</p>
                                             <p className="text-sm">{vocabulary[currentTask.category][currentTask.word].forms}</p>
@@ -868,7 +770,7 @@
             );
         };
 
-        ReactDOM.render(React.createElement(ItalianBeginnerApp), document.getElementById('root'));
+        ReactDOM.render(React.createElement(ItalianBasicApp), document.getElementById('root'));
     </script>
 </body>
 </html>
